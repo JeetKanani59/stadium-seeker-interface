@@ -5,21 +5,19 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { StadiumResult, StadiumResultCard } from "./StadiumResultCard";
 
 interface ResultTabsProps {
-  relevanceResults: StadiumResult[];
-  clusterResults: StadiumResult[];
-  expansionResults: StadiumResult[];
-  comparisonResults: StadiumResult[];
+  myEngineResults: StadiumResult[];
+  googleResults: StadiumResult[];
+  bingResults: StadiumResult[];
   isLoading: boolean;
 }
 
 export function ResultTabs({ 
-  relevanceResults, 
-  clusterResults, 
-  expansionResults, 
-  comparisonResults,
+  myEngineResults, 
+  googleResults, 
+  bingResults,
   isLoading
 }: ResultTabsProps) {
-  const [activeTab, setActiveTab] = useState("relevance");
+  const [activeTab, setActiveTab] = useState("myengine");
   
   const renderResults = (results: StadiumResult[]) => {
     if (isLoading) {
@@ -61,59 +59,47 @@ export function ResultTabs({
   };
 
   return (
-    <Tabs defaultValue="relevance" value={activeTab} onValueChange={setActiveTab} className="w-full">
+    <Tabs defaultValue="myengine" value={activeTab} onValueChange={setActiveTab} className="w-full">
       <div className="border-b sticky top-0 bg-background z-10 pb-0">
         <TabsList className="w-full h-auto bg-transparent mb-0 justify-start overflow-x-auto">
-          <TabsTrigger value="relevance" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
-            Relevance Model
-            {relevanceResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{relevanceResults.length}</span>}
+          <TabsTrigger value="myengine" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+            My Search Engine Results
+            {myEngineResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{myEngineResults.length}</span>}
           </TabsTrigger>
-          <TabsTrigger value="cluster" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
-            Cluster Based
-            {clusterResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{clusterResults.length}</span>}
+          <TabsTrigger value="google" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+            Google
+            {googleResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{googleResults.length}</span>}
           </TabsTrigger>
-          <TabsTrigger value="expansion" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
-            Query Expansion
-            {expansionResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{expansionResults.length}</span>}
-          </TabsTrigger>
-          <TabsTrigger value="comparison" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
-            Google & Bing
-            {comparisonResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{comparisonResults.length}</span>}
+          <TabsTrigger value="bing" className="py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+            Bing
+            {bingResults.length > 0 && <span className="ml-2 text-xs bg-muted rounded-full px-2 py-0.5">{bingResults.length}</span>}
           </TabsTrigger>
         </TabsList>
       </div>
       
       <ScrollArea className="h-[calc(100vh-250px)] px-1">
-        <TabsContent value="relevance" className="mt-6 space-y-4">
+        <TabsContent value="myengine" className="mt-6 space-y-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Relevance Model Results</h2>
-            <p className="text-sm text-muted-foreground">Sorted by relevance to your query</p>
+            <h2 className="text-xl font-semibold">My Search Engine Results</h2>
+            <p className="text-sm text-muted-foreground">Results from your custom model</p>
           </div>
-          {renderResults(relevanceResults)}
+          {renderResults(myEngineResults)}
         </TabsContent>
         
-        <TabsContent value="cluster" className="mt-6 space-y-4">
+        <TabsContent value="google" className="mt-6 space-y-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Cluster Based Results</h2>
-            <p className="text-sm text-muted-foreground">Results grouped by similarity</p>
+            <h2 className="text-xl font-semibold">Google Results</h2>
+            <p className="text-sm text-muted-foreground">Results from Google</p>
           </div>
-          {renderResults(clusterResults)}
+          {renderResults(googleResults)}
         </TabsContent>
         
-        <TabsContent value="expansion" className="mt-6 space-y-4">
+        <TabsContent value="bing" className="mt-6 space-y-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Query Expansion Results</h2>
-            <p className="text-sm text-muted-foreground">Results with expanded search terms</p>
+            <h2 className="text-xl font-semibold">Bing Results</h2>
+            <p className="text-sm text-muted-foreground">Results from Bing</p>
           </div>
-          {renderResults(expansionResults)}
-        </TabsContent>
-        
-        <TabsContent value="comparison" className="mt-6 space-y-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Google & Bing Results</h2>
-            <p className="text-sm text-muted-foreground">Comparison with traditional search engines</p>
-          </div>
-          {renderResults(comparisonResults)}
+          {renderResults(bingResults)}
         </TabsContent>
       </ScrollArea>
     </Tabs>

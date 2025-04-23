@@ -7,7 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 // Mock data for demonstration
 const mockStadiumData: Record<string, StadiumResult[]> = {
-  relevance: [
+  myengine: [
     {
       name: "Camp Nou",
       location: "Barcelona, Spain",
@@ -49,66 +49,7 @@ const mockStadiumData: Record<string, StadiumResult[]> = {
       yearBuilt: 1853
     }
   ],
-  cluster: [
-    {
-      name: "Camp Nou",
-      location: "Barcelona, Spain",
-      capacity: 99354,
-      sports: ["Football"],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Camp_Nou_aerial_%28cropped%29.jpg/1200px-Camp_Nou_aerial_%28cropped%29.jpg",
-      relevanceScore: 0.98,
-      url: "#",
-      source: "Cluster A",
-      yearBuilt: 1957
-    },
-    {
-      name: "Santiago Bernabéu Stadium",
-      location: "Madrid, Spain",
-      capacity: 81044,
-      sports: ["Football"],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/The_Santiago_Bernabeu_Stadium_-_U-g-g-B-o-y.jpg/1200px-The_Santiago_Bernabeu_Stadium_-_U-g-g-B-o-y.jpg",
-      relevanceScore: 0.92,
-      url: "#",
-      source: "Cluster A",
-      yearBuilt: 1947
-    },
-    {
-      name: "Old Trafford",
-      location: "Manchester, UK",
-      capacity: 74140,
-      sports: ["Football"],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Manchester_United_Panorama_%288051523746%29.jpg/1200px-Manchester_United_Panorama_%288051523746%29.jpg",
-      relevanceScore: 0.89,
-      url: "#",
-      source: "Cluster B",
-      yearBuilt: 1910
-    }
-  ],
-  expansion: [
-    {
-      name: "Allianz Arena",
-      location: "Munich, Germany",
-      capacity: 75000,
-      sports: ["Football"],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Allianz_Arena_zu_Beginn_des_Spiels_FCB-Real.jpeg/1200px-Allianz_Arena_zu_Beginn_des_Spiels_FCB-Real.jpeg",
-      relevanceScore: 0.88,
-      url: "#",
-      source: "Expanded Term: Soccer",
-      yearBuilt: 2005
-    },
-    {
-      name: "Signal Iduna Park",
-      location: "Dortmund, Germany",
-      capacity: 81365,
-      sports: ["Football"],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Signal_Iduna_Park_frequent_BVB_choreo_sector.jpg/1200px-Signal_Iduna_Park_frequent_BVB_choreo_sector.jpg",
-      relevanceScore: 0.85,
-      url: "#",
-      source: "Expanded Term: Bundesliga",
-      yearBuilt: 1974
-    }
-  ],
-  comparison: [
+  google: [
     {
       name: "Camp Nou",
       location: "Barcelona, Spain",
@@ -118,7 +59,9 @@ const mockStadiumData: Record<string, StadiumResult[]> = {
       url: "#",
       source: "Google",
       yearBuilt: 1957
-    },
+    }
+  ],
+  bing: [
     {
       name: "Wembley Stadium",
       location: "London, UK",
@@ -135,32 +78,28 @@ const mockStadiumData: Record<string, StadiumResult[]> = {
 export function StadiumSearchEngine() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [relevanceResults, setRelevanceResults] = useState<StadiumResult[]>([]);
-  const [clusterResults, setClusterResults] = useState<StadiumResult[]>([]);
-  const [expansionResults, setExpansionResults] = useState<StadiumResult[]>([]);
-  const [comparisonResults, setComparisonResults] = useState<StadiumResult[]>([]);
+  const [myEngineResults, setMyEngineResults] = useState<StadiumResult[]>([]);
+  const [googleResults, setGoogleResults] = useState<StadiumResult[]>([]);
+  const [bingResults, setBingResults] = useState<StadiumResult[]>([]);
   const { toast } = useToast();
 
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
     setIsSearching(true);
-    
+
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // In a real application, you would call your API here
-    // For now, we'll use mock data
-    setRelevanceResults(mockStadiumData.relevance);
-    setClusterResults(mockStadiumData.cluster);
-    setExpansionResults(mockStadiumData.expansion);
-    setComparisonResults(mockStadiumData.comparison);
-    
+
+    // In a real application, replace this with your API calls and dynamic data extraction!
+    setMyEngineResults(mockStadiumData.myengine);
+    setGoogleResults(mockStadiumData.google);
+    setBingResults(mockStadiumData.bing);
+
     setIsSearching(false);
-    
+
     toast({
       title: "Search completed",
-      description: `Found ${mockStadiumData.relevance.length + mockStadiumData.cluster.length + 
-                     mockStadiumData.expansion.length + mockStadiumData.comparison.length} results for "${query}"`,
+      description: `Found ${mockStadiumData.myengine.length + mockStadiumData.google.length + mockStadiumData.bing.length} results for "${query}"`,
     });
   };
 
@@ -173,10 +112,9 @@ export function StadiumSearchEngine() {
       {searchQuery && (
         <div className="mt-8">
           <ResultTabs
-            relevanceResults={relevanceResults}
-            clusterResults={clusterResults}
-            expansionResults={expansionResults}
-            comparisonResults={comparisonResults}
+            myEngineResults={myEngineResults}
+            googleResults={googleResults}
+            bingResults={bingResults}
             isLoading={isSearching}
           />
         </div>
