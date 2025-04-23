@@ -1,7 +1,7 @@
 # Welcome to your Lovable project
 
 Project info
-URL: (https://github.com/JeetKanani59/stadium-seeker-interface-plus)
+URL: (https://github.com/JeetKanani59/stadium-seeker-interface)
 
 ## How can I edit this code?
 
@@ -27,7 +27,7 @@ npm i
 npm run dev
 ```
 
-**Edit a file directly in GitHub
+**Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).
 - Click the "Edit" button (pencil icon) at the top right of the file view.
