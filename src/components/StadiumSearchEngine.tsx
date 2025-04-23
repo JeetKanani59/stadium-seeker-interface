@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { SearchBar } from './SearchBar';
 import { ResultTabs } from './ResultTabs';
@@ -102,6 +101,14 @@ export function StadiumSearchEngine() {
       description: `Found ${mockStadiumData.myengine.length + mockStadiumData.google.length + mockStadiumData.bing.length} results for "${query}"`,
     });
   };
+
+  // Clear results when component mounts (page refresh)
+  useState(() => {
+    setMyEngineResults([]);
+    setGoogleResults([]);
+    setBingResults([]);
+    setSearchQuery("");
+  });
 
   return (
     <div className="container mx-auto px-4">
