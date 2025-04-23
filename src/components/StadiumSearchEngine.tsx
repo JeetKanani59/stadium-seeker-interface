@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { SearchBar } from './SearchBar';
 import { ResultTabs } from './ResultTabs';
 import { StadiumResult } from './StadiumResultCard';
@@ -82,6 +83,14 @@ export function StadiumSearchEngine() {
   const [bingResults, setBingResults] = useState<StadiumResult[]>([]);
   const { toast } = useToast();
 
+  // Clear results when component mounts (page refresh)
+  useEffect(() => {
+    setMyEngineResults([]);
+    setGoogleResults([]);
+    setBingResults([]);
+    setSearchQuery("");
+  }, []); // Empty dependency array ensures this runs only once on mount
+
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
     setIsSearching(true);
@@ -101,14 +110,6 @@ export function StadiumSearchEngine() {
       description: `Found ${mockStadiumData.myengine.length + mockStadiumData.google.length + mockStadiumData.bing.length} results for "${query}"`,
     });
   };
-
-  // Clear results when component mounts (page refresh)
-  useState(() => {
-    setMyEngineResults([]);
-    setGoogleResults([]);
-    setBingResults([]);
-    setSearchQuery("");
-  });
 
   return (
     <div className="container mx-auto px-4">
